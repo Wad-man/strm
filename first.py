@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 
-import ssl
-ssl._create_default_https_context = ssl._create_unverified_context
+#import ssl
+#ssl._create_default_https_context = ssl._create_unverified_context
 
 st.title('Конвертация файла')
 st.text('Загружаете файл, нажимаете конвертировать, затем скачиваете готовый файл.')
