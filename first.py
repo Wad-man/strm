@@ -15,7 +15,7 @@ if uploaded_file is not None:
     result = st.button("Конвертировать")
     if result:
         # Чтение файла import.csv
-        df = pd.read_csv('import.csv', sep=';', encoding='utf-8')
+        df = pd.read_csv(uploaded_file, sep=';', encoding='utf-8')
         #df = df.iloc[1:]  # убрать первую строку
 
         # Формируем уникальные значения
