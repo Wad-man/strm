@@ -1,5 +1,9 @@
 import streamlit as st
 import pandas as pd
+import io
+# import openpyxl
+from openpyxl.workbook import Workbook
+
 
 #import ssl
 #ssl._create_default_https_context = ssl._create_unverified_context
@@ -42,13 +46,39 @@ if uploaded_file is not None:
             result_df.loc[mask, 'page_tone_export'] = row['page_tone_export']
 
         result_df.to_csv('export.csv', sep=';', index=False, encoding='utf-8-sig')
-        
+
         st.subheader("Файл готов :heart:")
         with open('export.csv', encoding='utf-8-sig') as file:
+            # сохранить в CSV
             st.download_button(
-                label="Скачать результат",
+                label="Скачать результат (CSV)",
                 data=file,
                 file_name='export.csv',
                 mime='text/csv; charset=utf-8',
+                type="secondary",
+            )
+
+            # сохранить в XLSX
+            output = io.BytesIO()
+            with pd.ExcelWriter(output, engine='openpyxl') as writer:
+                result_df.to_excel(writer, sheet_name='PageTone', index=False)
+                workbook = writer.book
+                worksheet = workbook.active
+                worksheet.title = 'PageTone'
+                worksheet.column_dimensions['A'].width = 20
+                worksheet.column_dimensions['B'].width = 20
+                worksheet.column_dimensions['C'].width = 20
+                worksheet.column_dimensions['D'].width = 20
+                worksheet.column_dimensions['E'].width = 20
+                worksheet.column_dimensions['F'].width = 20
+                worksheet.column_dimensions['G'].width = 20
+                worksheet.column_dimensions['H'].width = 20
+                worksheet.column_dimensions['I'].width = 20
+                
+            st.download_button(
+                label="Скачать результат (XLSX)",
+                data=output.getvalue(),
+                file_name='export.xlsx',
+                mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 type="primary",
             )
