@@ -7,6 +7,8 @@ verify_ssl = true
 
 [packages]
 streamlit = "*"
+openpyxl = "*"
+io = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.11"
